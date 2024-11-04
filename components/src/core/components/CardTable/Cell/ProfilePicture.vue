@@ -12,6 +12,7 @@
     :link="profilePicture.link"
     :imageSrc="profilePicture.src"
     :link-mode="profilePicture.target"
+    :link-handler="handleLinkClick"
     v-bind="$attrs"
   />
 </template>
@@ -52,6 +53,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    header: {
+      type: Object,
+      default: () => ({}),
+    },
+    rowItem: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   setup(props) {
     const imgSrc = ref(null);
@@ -87,6 +96,14 @@ export default defineComponent({
 
     const isLoading = computed(() => props.loading || imgLoading.value);
 
+    const handleLinkClick = (event: MouseEvent) => {
+      const cellConfig = props.header?.cellConfig;
+      if (cellConfig && typeof cellConfig?.onClick === 'function') {
+        event.preventDefault();
+        props.header?.cellConfig.onClick(props.rowItem, event);
+      }
+    };
+
     watchEffect(async () => {
       imgSrc.value = await loadImage(props.item as string);
     });
@@ -94,6 +111,7 @@ export default defineComponent({
     return {
       isLoading,
       profilePicture,
+      handleLinkClick,
     };
   },
 });

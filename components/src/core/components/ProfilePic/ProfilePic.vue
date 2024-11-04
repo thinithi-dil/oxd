@@ -1,7 +1,12 @@
 <template>
   <div :class="classes">
     <slot>
-      <a v-if="link" :href="link" :target="linkMode">
+      <a
+        v-if="link"
+        :href="link"
+        :target="linkMode"
+        @click="handleLinkClick($event)"
+      >
         <span
           class="img-tag"
           :style="`background-image: url(${profileImage})`"
@@ -29,6 +34,7 @@ import {
 import {defaultUser} from './images';
 export default defineComponent({
   name: 'oxd-profile-pic',
+
   props: {
     size: {
       type: String,
@@ -54,6 +60,17 @@ export default defineComponent({
       validator: (value: TargetTypes) => {
         return TARGETS.indexOf(value) !== -1;
       },
+    },
+    linkHandler: {
+      type: Function,
+      required: false,
+    },
+  },
+  methods: {
+    handleLinkClick(event: MouseEvent) {
+      if (this.linkHandler && typeof this.linkHandler === 'function') {
+        this.linkHandler(event);
+      }
     },
   },
   computed: {
