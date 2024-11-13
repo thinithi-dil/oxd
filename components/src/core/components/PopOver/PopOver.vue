@@ -1,6 +1,6 @@
 <template>
   <div class="oxd-pop-over">
-    <div @click="openPopOver" class="oxd-pop-over-button">
+    <div @click="togglePopOver" class="oxd-pop-over-button">
       <slot name="button"></slot>
     </div>
     <transition name="transition-fade-down">
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from 'vue';
+import {defineComponent, onBeforeUnmount, ref, watch} from 'vue';
 import clickOutsideDirective from '../../../directives/click-outside';
 import dropdownDirectionDirective from '../../../directives/dropdown-direction';
 import popoverHorizontalDirectionDirectiveDirectionDirective from '../../../directives/popover-direction';
@@ -42,33 +42,59 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    persistent: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['update:show'],
-  // eslint-disable-next-line
-  setup: function(props: any) {
+  setup(props) {
     const isActive = ref<boolean>(props.show);
-    const openPopOver = () => {
-      isActive.value = !isActive.value;
-    };
-    const closePopOver = (e: Event) => {
-      if (isActive.value) {
-        isActive.value = false;
+
+    const handleOutsideClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.oxd-pop-over')) {
+        e.stopPropagation();
+        e.preventDefault();
       }
-      e.stopImmediatePropagation();
     };
 
-    //isActive value set to false, when the props.show value change triggered
+    const enableClickFreeze = () => {
+      document.addEventListener('click', handleOutsideClick, true);
+    };
+
+    const disableClickFreeze = () => {
+      document.removeEventListener('click', handleOutsideClick, true);
+    };
+
+    const togglePopOver = () => {
+      isActive.value = !isActive.value;
+      props.persistent && isActive.value
+        ? enableClickFreeze()
+        : disableClickFreeze();
+    };
+
+    const closePopOver = (e: Event) => {
+      if (!props.persistent && isActive.value) {
+        isActive.value = false;
+        disableClickFreeze();
+        e.stopPropagation();
+      }
+    };
+
     watch(
       () => props.show,
       () => {
-        isActive.value = false;
+        togglePopOver();
       },
     );
 
+    onBeforeUnmount(() => disableClickFreeze());
+
     return {
       isActive,
-      openPopOver,
+      togglePopOver,
       closePopOver,
     };
   },

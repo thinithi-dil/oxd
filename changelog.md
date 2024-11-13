@@ -1,3 +1,5 @@
+2024-11-13 - 4bbea12b487254178cac9ca96687bec06379aa7c - PopOver.vue, Dialog.vue, PopOver.stories.js, pop-over.spec.ts - Modified PopOver component to be able to configure as persistent or not, Modified Dialog component to not to be able to close when ESC pressed while persistent is set to true
+
 2024-11-11 - 30e71393cff4e116c842c56bf35ef84bd659448d - components/Icon/icons.ts - Add oxd-on-leave,oxd-holiday,oxd-disabled-url,oxd-generate-link,oxd-enable-url icons
 
 2024-11-11 - 30e71393cff4e116c842c56bf35ef84bd659448d - components/Input/CheckboxInput.vue, components/Input/CheckboxInput.vue - Add a border prop to enable borders for the checkbox and an optionInfoIconPosition prop to adjust optional icon position.

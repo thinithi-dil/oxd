@@ -96,7 +96,7 @@ export default defineComponent({
     },
 
     onEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
+      if (!this.persistent && e.key === 'Escape') {
         this.$emit('update:show', false);
       }
     },
