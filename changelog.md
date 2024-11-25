@@ -1,3 +1,5 @@
+2024-11-25 - 8f72e7876778929c8f86de9e50362f71c04a6133 - components/Collapsible.vue - getting tooltip flow attribute as a props
+
 2024-11-13 - 52366879d1e5cf23bc23ebd47a2b65c4fbf7b903 - TinyMce/TinyMce.vue - emit editor instance
 
 2024-11-13 - 4bbea12b487254178cac9ca96687bec06379aa7c - PopOver.vue, Dialog.vue, PopOver.stories.js, pop-over.spec.ts - Modified PopOver component to be able to configure as persistent or not, Modified Dialog component to not to be able to close when ESC pressed while persistent is set to true
