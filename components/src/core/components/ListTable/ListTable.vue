@@ -4,7 +4,7 @@
       <oxd-card-tr :clickable="false">
         <oxd-card-th
           v-if="loading && skeleton"
-          class="oxd-padding-cell oxd-table-th"
+          class="oxd-padding-cell oxd-table-th checkbox-cell"
         >
           <oxd-skeleton class="oxd-skeleton-checkbox" animateHighlighted />
         </oxd-card-th>
