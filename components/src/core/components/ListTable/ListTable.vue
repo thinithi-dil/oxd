@@ -59,7 +59,7 @@
       >
         <oxd-card-tr :clickable="clickable">
           <oxd-card-cell
-            class="oxd-padding-cell checkbox-cell"
+            class="oxd-padding-cell"
             :index="index"
             :headers="cardHeaders"
             :loading="item._skeleton"
