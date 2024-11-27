@@ -10,7 +10,7 @@
         </oxd-card-th>
         <oxd-card-th
           v-else-if="selectable"
-          class="oxd-padding-cell oxd-table-th"
+          class="oxd-padding-cell oxd-table-th checkbox-cell"
         >
           <oxd-checkbox-input v-model="selectAll" :checkIcon="checkIcon" />
         </oxd-card-th>
