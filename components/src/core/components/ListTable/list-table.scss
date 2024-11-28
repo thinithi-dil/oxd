@@ -64,7 +64,10 @@
   @include truncate(2, 1);
 }
 
-::v-deep(.checkbox-cell) {
+:deep(.oxd-table-row > div:nth-child(1)) {
   padding-left: 5px;
+}
+
+::v-deep(.checkbox-cell) {
   padding-right: 0;
 }
