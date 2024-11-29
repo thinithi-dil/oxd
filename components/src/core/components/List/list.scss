@@ -100,7 +100,7 @@
     }
     :deep(.oxd-table-cell) {
       &:first-child {
-        padding-left: 0;
+        padding-left: 5px;
       }
       flex-wrap: nowrap;
       .oxd-select-wrapper {
