@@ -333,7 +333,6 @@ export default defineComponent({
     const oxdCardTableStyleClasses = computed(() => {
       let styleClasses = 'oxd-classic-table ';
       styleClasses += config.value.table.topBar.visible ? 'with-filters' : '';
-      styleClasses += config.value.table.selectable ? ' is-selectable' : '';
       return styleClasses;
     });
 
