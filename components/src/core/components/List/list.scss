@@ -117,6 +117,12 @@
         margin-right: 0;
       }
     }
+    :deep(.is-selectable .oxd-table-th) {
+      padding-right: 0;
+    }
+    :deep(.is-selectable .oxd-table-cell) {
+      padding-right: 0;
+    }
   }
 }
 
