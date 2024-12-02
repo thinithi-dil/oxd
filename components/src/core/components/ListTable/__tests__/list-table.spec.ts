@@ -1,5 +1,6 @@
 import {mount} from '@vue/test-utils';
 import Skeleton from '@orangehrm/oxd/core/components/Skeleton/Skeleton.vue';
+import CheckboxInput from '@orangehrm/oxd/core/components/Input/CheckboxInput.vue';
 import ListTable from '@orangehrm/oxd/core/components/ListTable/ListTable.vue';
 
 const DUMMY_DATA = {
@@ -88,5 +89,61 @@ describe('ListTable > ListTable.vue', () => {
       13,
     );
     expect(wrapper.findAllComponents(Skeleton).length).toEqual(6);
+  });
+
+  it('should render checkbox-cell with skeleton when loading and skeleton are true', () => {
+    const wrapper = mount(ListTable, {
+      props: {
+        loading: true,
+        skeleton: true,
+        items: DUMMY_DATA.items,
+        headers: DUMMY_DATA.headers,
+      },
+    });
+    const checkboxCell = wrapper.find('.checkbox-cell');
+    expect(checkboxCell.exists()).toBe(true);
+    expect(checkboxCell.findComponent(Skeleton).exists()).toBe(true);
+  });
+
+  it('should render checkbox-cell with checkbox input when selectable is true', () => {
+    const wrapper = mount(ListTable, {
+      props: {
+        selectable: true,
+        items: DUMMY_DATA.items,
+        headers: DUMMY_DATA.headers,
+      },
+    });
+    const checkboxCell = wrapper.find('.checkbox-cell');
+    expect(checkboxCell.exists()).toBe(true);
+    expect(checkboxCell.findComponent(CheckboxInput).exists()).toBe(true);
+  });
+
+  it('should not render checkbox-cell when neither loading & skeleton nor selectable are true', () => {
+    const wrapper = mount(ListTable, {
+      props: {
+        loading: false,
+        skeleton: false,
+        selectable: false,
+        items: DUMMY_DATA.items,
+        headers: DUMMY_DATA.headers,
+      },
+    });
+    expect(wrapper.find('.checkbox-cell').exists()).toBe(false);
+  });
+
+  it('should render skeleton checkbox-cell when loading & skeleton are true even if selectable is true', () => {
+    const wrapper = mount(ListTable, {
+      props: {
+        loading: true,
+        skeleton: true,
+        selectable: true,
+        items: DUMMY_DATA.items,
+        headers: DUMMY_DATA.headers,
+      },
+    });
+    const checkboxCell = wrapper.find('.checkbox-cell');
+    expect(checkboxCell.exists()).toBe(true);
+    expect(checkboxCell.findComponent(Skeleton).exists()).toBe(true);
+    expect(checkboxCell.findComponent(CheckboxInput).exists()).toBe(false);
   });
 });

@@ -90,7 +90,7 @@ export default defineComponent({
           item: cellData,
           header: header,
           rowItem: rowData,
-          class: header.name === 'selector' ? [header.class, 'checkbox-cell'] : header.class,
+          class: header.class,
           loading: this.loading && header.hideOnLoading !== true,
           style:
             header.hideOnLoading === true && this.loading
@@ -107,7 +107,10 @@ export default defineComponent({
           {
             key: header,
             style: header.style,
-            class: header.name === 'selector' ? ['checkbox-cell', this.$attrs.class] : this.$attrs.class,
+            class:
+              header.name === 'selector'
+                ? ['checkbox-cell', this.$attrs.class]
+                : this.$attrs.class,
           },
           {
             default: () => h(cellType ?? defaultCell, cellProps),

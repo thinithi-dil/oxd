@@ -91,7 +91,10 @@ export default defineComponent({
           {
             key: header,
             style: header.style,
-            class: this.$attrs.class,
+            class:
+              header.name === 'selector'
+                ? ['checkbox-cell', this.$attrs.class]
+                : this.$attrs.class,
           },
           {
             default: () => h(cellType ?? defaultCell, cellProps),
