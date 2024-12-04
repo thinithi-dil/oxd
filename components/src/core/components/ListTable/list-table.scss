@@ -65,6 +65,10 @@
   @include truncate(2, 1);
 }
 
+::v-deep(.oxd-table-cell-actions) {
+  justify-content: right;
+}
+
 ::v-deep(.oxd-table-row > div:nth-child(1)) {
   padding-left: 5px;
 }
