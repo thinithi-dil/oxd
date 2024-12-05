@@ -61,7 +61,7 @@ export default {
         toolbar1:
           'toggleToolbar | fontselect fontsizeselect | bold italic | bullist numlist outdent indent ',
         toolbar2:
-          'undo redo | link image image-upload | alignleft aligncenter alignright alignjustify | forecolor backcolor ',
+          'undo redo | link image image-upload | alignleft aligncenter alignright alignjustify | forecolor backcolor | background-upload background-remove',
         image_advtab: true,
         browser_spellcheck: true,
         paste_as_text: true,
