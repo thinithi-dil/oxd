@@ -27,7 +27,7 @@
 }
 
 :deep(.oxd-table-cell-actions) {
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 :deep(.oxd-table-th), :deep(.oxd-table-cell){

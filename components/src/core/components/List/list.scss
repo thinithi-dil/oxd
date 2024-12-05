@@ -118,7 +118,7 @@
       }
     }
     :deep(.oxd-table-cell-actions) {
-      justify-content: right;
+      justify-content: flex-end;
     }
     :deep(.oxd-checkbox-input) {
       @media (min-width: 0px) and (max-width: 1366px) {
