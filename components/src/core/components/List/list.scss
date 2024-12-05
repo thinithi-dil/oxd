@@ -98,11 +98,6 @@
         }
       }
     }
-    :deep(.oxd-table-th:has(.oxd-checkbox-input)), :deep(.oxd-table-cell:has(.oxd-checkbox-input)) {
-      &:first-child {
-        padding-right: 0;
-      }
-    }
     :deep(.oxd-table-cell) {
       &:first-child {
         padding-left: 5px;
@@ -116,9 +111,6 @@
           width: fit-content;
         }
       }
-    }
-    :deep(.oxd-table-cell-actions) {
-      justify-content: flex-end;
     }
     :deep(.oxd-checkbox-input) {
       @media (min-width: 0px) and (max-width: 1366px) {
