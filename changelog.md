@@ -1,3 +1,5 @@
+2024-12-06 - aff57f2e32c0c3b18ddc0141fcd3ec821579ce2e - CardTable/Cell/DefaultCellContainer.vue, CardTable/Header/DefaultCardHeader.vue, CardTable/Table/_variables.scss, CardTable/Table/table-row.scss, List/list.scss, ListTable/CellContainer.vue, ListTable/ListTable.vue, ListTable/__tests__/__snapshots__/list-table.spec.ts.snap, ListTable/__tests__/list-table.spec.ts, ListTable/list-table.scss - Add 11px left and right padding for each cell, remove right padding of checkbox cell, make left padding of any first coloumn 5px and right align all action buttons in action class.
+
 2024-11-25 - 8f72e7876778929c8f86de9e50362f71c04a6133 - components/Collapsible.vue - getting tooltip flow attribute as a props
 
 2024-11-13 - 52366879d1e5cf23bc23ebd47a2b65c4fbf7b903 - TinyMce/TinyMce.vue - emit editor instance
