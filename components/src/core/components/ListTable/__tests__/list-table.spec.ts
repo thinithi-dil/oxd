@@ -100,11 +100,36 @@ describe('ListTable > ListTable.vue', () => {
         headers: DUMMY_DATA.headers,
       },
     });
-    const checkboxCell = wrapper.find('.checkbox-cell');
-    expect(checkboxCell.exists()).toBe(true);
-    expect(
-      checkboxCell.findComponent({name: 'oxd-checkbox-input'}).exists(),
-    ).toBe(true);
+
+    const checkboxCells = wrapper.findAll('.checkbox-cell');
+    expect(checkboxCells.length).toBeGreaterThan(0);
+
+    checkboxCells.forEach(cell => {
+      expect(cell.exists()).toBe(true);
+      expect(cell.findComponent({name: 'oxd-checkbox-input'}).exists()).toBe(
+        true,
+      );
+    });
+
     expect(wrapper.props('selectable')).toBe(true);
+  });
+
+  it('should not render checkbox-cell when selectable is false', () => {
+    const wrapper = mount(ListTable, {
+      props: {
+        selectable: false,
+        items: DUMMY_DATA.items,
+        headers: DUMMY_DATA.headers,
+      },
+    });
+
+    const checkboxCells = wrapper.findAll('.checkbox-cell');
+    expect(checkboxCells.length).toBe(0);
+
+    checkboxCells.forEach(cell => {
+      expect(cell.exists()).toBe(false);
+    });
+
+    expect(wrapper.props('selectable')).toBe(false);
   });
 });
