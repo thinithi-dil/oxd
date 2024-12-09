@@ -105,11 +105,13 @@ export default defineComponent({
     const seonderyTooltbar = ref();
     const fileInput = ref();
     const setTinymceImage = ref();
+    let setTinymceBackGroundImage;
     const tinymceImageTypeValidator = ref();
     const tinymceImageSizeValidator = ref();
     const tinymceId = ref<string>(`oxd-html-editor-${nanoid(6)}`);
     const attachmentSize = props.attachmentSize || 0;
     const attachmentSizeInMb = attachmentSize / (1024 * 1024);
+    const imageUploadForBackgound = ref(false);
 
     /*eslint-disable */
     const initialObject: any = {
@@ -154,6 +156,44 @@ export default defineComponent({
           };
           reader.onerror = (error: any) => {};
         };
+
+        setTinymceBackGroundImage = (file: File) => {
+          imageUploadForBackgound.value = false;
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            const image = new Image();
+            image.src = reader.result;
+            image.onload = function () {
+              let height = this.height;
+              let existingContent = editor.getContent();
+              let newContent = existingContent;
+              let tempDiv = document.createElement('div');
+              tempDiv.innerHTML = existingContent;
+              if (tempDiv.firstChild?.classList.contains('background-image')) {
+                let existingChildren = '';
+                const children = tempDiv.firstChild.children;
+
+                Array.from(children).forEach((item) => {
+                  existingChildren += item.outerHTML;
+                });
+                if (existingChildren.trim() === '') {
+                  existingChildren = '<p>&nbsp;</p>';
+                }
+                newContent = '<div id="backgroundImage" class="background-image" style="background-repeat: no-repeat; background-image: url(\'' + reader.result + '\'); min-height: ' + height + 'px " data-src="' + reader.result + '">' + existingChildren + '</div>';
+              } else {
+                if (existingContent == "") {
+                  existingContent = "<p>&nbsp;</p>";
+                }
+                newContent = '<div id="backgroundImage" class="background-image" style="background-repeat: no-repeat; background-image: url(\'' + reader.result + '\'); min-height: ' + height + 'px " data-src="' + reader.result + '">' + existingContent + '</div>';
+              }
+              editor.setContent('');
+              editor.execCommand('mceReplaceContent', false, newContent);
+              clearInputField();
+            }
+          };
+          reader.onerror = (error: any) => { };
+        };
         tinymceImageSizeValidator.value = (file: File) => {
           if (!file || !file.size) {
             return true;
@@ -162,6 +202,8 @@ export default defineComponent({
               if (typeof editor.image_size_error === 'function') {
                 editor.image_size_error();
               }
+              imageUploadForBackgound.value = false;
+              clearInputField();
               return false;
             }
             return true;
@@ -180,6 +222,8 @@ export default defineComponent({
               if (typeof editor.image_type_error === 'function') {
                 editor.image_type_error();
               }
+              imageUploadForBackgound.value = false;
+              clearInputField();
               return false;
             }
             return true;
@@ -200,6 +244,50 @@ export default defineComponent({
             seonderyTooltbar.value.classList.toggle('d-none');
           },
         });
+        editor.addButton('background-upload', {
+          tooltip: 'Upload background image',
+          icon: 'upload-bg',
+          onclick() {
+            imageUploadForBackgound.value = true;
+            fileInput.value.click();
+          }
+        });
+        editor.addButton('background-remove', {
+          tooltip: 'Remove background image',
+          icon: 'remove-bg',
+          onclick() {
+            removeTinymceBackgroundImage();
+          }
+        });
+
+        const clearInputField = () => {
+          let inputField= document.querySelector(
+              `#tinymce-input-${tinymceId.value}`,
+          );
+          if(inputField){
+            const parent = inputField.parentNode;
+            const newFileInput = inputField.cloneNode(true); // Clone the original input
+            newFileInput.value = ''; // Ensure the new input is reset
+            parent.replaceChild(newFileInput, inputField);
+          }
+        }
+
+        const removeTinymceBackgroundImage = () => {
+          let existingContent = editor.getContent();
+          let tempDiv = document.createElement('div');
+          tempDiv.innerHTML = existingContent;
+          if (tempDiv.firstChild?.classList.contains('background-image') ||
+              (tempDiv.firstChild?.nodeType === 1 && tempDiv.firstChild?.style.backgroundImage && tempDiv.firstChild?.style.backgroundImage !== 'none')) {
+            let existingChildren = '';
+            const children = tempDiv.firstChild.children;
+
+            Array.from(children).forEach((item) => {
+              existingChildren += item.outerHTML;
+            });
+            editor.setContent('');
+            editor.execCommand('mceReplaceContent', false, existingChildren);
+          }
+        };
       },
       init_instance_callback() {
         seonderyTooltbar.value = document.querySelector(
@@ -236,7 +324,11 @@ export default defineComponent({
         tinymceImageTypeValidator.value(files[0]) &&
         tinymceImageSizeValidator.value(files[0])
       ) {
-        setTinymceImage.value(files[0]);
+        if (imageUploadForBackgound.value) {
+          setTinymceBackGroundImage && setTinymceBackGroundImage(files[0]);
+        } else {
+          setTinymceImage.value(files[0]);
+        }
       }
     };
 
