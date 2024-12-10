@@ -90,7 +90,7 @@ describe('ListTable > ListTable.vue', () => {
     expect(wrapper.findAllComponents(Skeleton).length).toEqual(6);
   });
 
-  it('should render checkbox-cell and table is selectable when selectable is true and not loading', () => {
+  it('should render checkbox cell when selectable is true and not loading', () => {
     const wrapper = mount(ListTable, {
       props: {
         loading: false,
@@ -110,11 +110,9 @@ describe('ListTable > ListTable.vue', () => {
         true,
       );
     });
-
-    expect(wrapper.props('selectable')).toBe(true);
   });
 
-  it('should not render checkbox-cell when selectable is false', () => {
+  it('should not render checkbox cell when selectable is false', () => {
     const wrapper = mount(ListTable, {
       props: {
         selectable: false,
@@ -125,11 +123,5 @@ describe('ListTable > ListTable.vue', () => {
 
     const checkboxCells = wrapper.findAll('.checkbox-cell');
     expect(checkboxCells.length).toBe(0);
-
-    checkboxCells.forEach(cell => {
-      expect(cell.exists()).toBe(false);
-    });
-
-    expect(wrapper.props('selectable')).toBe(false);
   });
 });
